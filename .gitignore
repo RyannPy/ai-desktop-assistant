@@ -1,2 +1,10 @@
 # env
 .env*
+
+.venv/
+
+# pycache
+__pycache__/
+
+# logs
+logs/
