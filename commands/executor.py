@@ -9,6 +9,7 @@ def run_command(cmd_key: str):
 
     try:
         subprocess.Popen(command, shell=True)
-        return f"Menjalankan {cmd_key}"
+        return f"Berhasil menjalankan {cmd_key}"
     except Exception as e:
+        print(e)
         return f"Error: {str(e)}"

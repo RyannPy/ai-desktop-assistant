@@ -5,4 +5,4 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-ALLOWED_USER_ID = os.getenv('ALLOWED_USER_ID')
+ALLOWED_USER_ID = int(os.getenv('ALLOWED_USER_ID'))
