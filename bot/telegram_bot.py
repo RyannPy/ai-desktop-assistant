@@ -23,23 +23,29 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # ambil dan parse
     text = update.message.text
-    intent = parse_intent(text)
-    command = intent["command"]
+    tasks = parse_intent(text)
 
-    if not intent:
-        await update.message.reply_text("Sorry, gua gak paham. Coba perintah lain.")
+    if not tasks:
+        await update.message.reply_text(
+            "Gua gak ngerti 😭"
+        )
         return
     
+    results = []
     # run
-    result = run_command(command)
-    time.sleep(2) # biar sabar
-    
-    # abis run atur layout
-    layout = intent["layout"]
-    if layout:
-        apply_layout(layout)
+    for task in tasks:
+        result = run_command(task["command"])
+        time.sleep(2) # biar sabar
+        results.append(result)
 
-    await update.message.reply_text(result)
+
+        # abis run atur layout
+        layout = task["layout"]
+        if layout:
+            apply_layout(layout)
+        time.sleep(2) # biar sabar
+
+    await update.message.reply_text("\n".join(results))
 
 
 def start_bot():
