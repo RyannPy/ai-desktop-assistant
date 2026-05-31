@@ -1,29 +1,44 @@
+import time
+
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
+from actions.layout import apply_layout
 from config.settings import TELEGRAM_TOKEN, ALLOWED_USER_ID
-from commands.executor import run_command
+from actions.executor import run_command
 
 from ai.intent_parser import parse_intent
 
 def is_allowed(user_id: int) -> bool:
+    # cuma gua
     return user_id == ALLOWED_USER_ID
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # cek id
     user_id = update.effective_user.id
     
     if not is_allowed(user_id):
         await update.message.reply_text("Access denied.")
         return
     
+    # ambil dan parse
     text = update.message.text
     intent = parse_intent(text)
+    command = intent["command"]
 
     if not intent:
         await update.message.reply_text("Sorry, gua gak paham. Coba perintah lain.")
         return
     
-    result = run_command(intent)
+    # run
+    result = run_command(command)
+    time.sleep(2) # biar sabar
+    
+    # abis run atur layout
+    layout = intent["layout"]
+    if layout:
+        apply_layout(layout)
+
     await update.message.reply_text(result)
 
 
