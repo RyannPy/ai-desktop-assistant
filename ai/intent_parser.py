@@ -1,28 +1,30 @@
-def parse_intent(text):
+def parse_intent(text: str):
     text = text.lower()
 
-    command = None
-    layout = None
+    tasks = []
 
     if "youtube" in text:
-        command = "youtube"
+        tasks.append({
+            "command": "youtube",
+            "layout": None
+        })
 
-    elif "vscode" in text:
-        command = "vscode"
+    if "vscode" in text:
+        tasks.append({
+            "command": "vscode",
+            "layout": None
+        })
 
-    elif "chrome" in text:
-        command = "chrome"
+    if "chrome" in text:
+        tasks.append({
+            "command": "chrome",
+            "layout": None
+        })
 
-    elif "nextjs" in text:
-        command = "nextjs"
+    if "nextjs" in text:
+        tasks.append({
+            "command": "nextjs",
+            "layout": None
+        })
 
-    if "kanan" in text:
-        layout = "right"
-
-    elif "kiri" in text:
-        layout = "left"
-
-    return {
-        "command": command,
-        "layout": layout
-    }
+    return tasks
