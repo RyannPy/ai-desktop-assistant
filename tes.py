@@ -1,5 +1,3 @@
-from ai.intent_parser import parse_intent
+from services.window_service import snap_left
 
-prompt = "Open youtube and vscode"
-tasks = parse_intent(prompt)
-print(tasks)
+snap_left("google chrome")

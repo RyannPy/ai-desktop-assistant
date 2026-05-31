@@ -1,4 +1,7 @@
 import pygetwindow as gw
+import pyautogui
+import time
+
 
 def get_all_windows():
     return [
@@ -7,7 +10,7 @@ def get_all_windows():
         if window.title.strip()
     ]
 
-def find_window(keyword: str):
+def get_window(keyword: str):
     keyword = keyword.lower()
     for window in gw.getAllWindows():
         title = window.title.lower()
@@ -19,7 +22,7 @@ def find_window(keyword: str):
 
 def focus_window(keyword: str):
 
-    window = find_window(keyword)
+    window = get_window(keyword)
 
     if not window:
         return False
@@ -30,7 +33,7 @@ def focus_window(keyword: str):
 
 def maximize_window(keyword: str):
 
-    window = find_window(keyword)
+    window = get_window(keyword)
 
     if not window:
         return False
@@ -41,11 +44,43 @@ def maximize_window(keyword: str):
 
 def minimize_window(keyword: str):
 
-    window = find_window(keyword)
+    window = get_window(keyword)
 
     if not window:
         return False
 
     window.minimize()
+
+    return True
+
+
+def snap_left(keyword: str):
+
+    window = get_window(keyword)
+
+    if not window:
+        return False
+
+    window.activate()
+
+    time.sleep(1)
+
+    pyautogui.hotkey("win", "left")
+
+    return True
+
+
+def snap_right(keyword: str):
+
+    window = get_window(keyword)
+
+    if not window:
+        return False
+
+    window.activate()
+
+    time.sleep(1)
+
+    pyautogui.hotkey("win", "right")
 
     return True
