@@ -1,30 +1,32 @@
+from commands.registry import VALID_COMMANDS
+
 def parse_intent(text: str):
-    text = text.lower()
+
+    words = text.lower().split()
 
     tasks = []
 
-    if "youtube" in text:
-        tasks.append({
-            "command": "youtube",
-            "layout": None
-        })
+    current_command = None
 
-    if "vscode" in text:
-        tasks.append({
-            "command": "vscode",
-            "layout": None
-        })
+    for word in words:
 
-    if "chrome" in text:
-        tasks.append({
-            "command": "chrome",
-            "layout": None
-        })
+        if word in VALID_COMMANDS:
 
-    if "nextjs" in text:
-        tasks.append({
-            "command": "nextjs",
-            "layout": None
-        })
+            current_command = {
+                "command": word,
+                "layout": None
+            }
+
+            tasks.append(current_command)
+
+        elif word == "kiri":
+
+            if current_command:
+                current_command["layout"] = "left"
+
+        elif word == "kanan":
+
+            if current_command:
+                current_command["layout"] = "right"
 
     return tasks

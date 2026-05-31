@@ -3,7 +3,7 @@ import time
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
-from actions.layout import apply_layout
+from services.layout_service import apply_layout
 from config.settings import TELEGRAM_TOKEN, ALLOWED_USER_ID
 from actions.executor import run_command
 
@@ -40,9 +40,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
         # abis run atur layout
-        layout = task["layout"]
-        if layout:
-            apply_layout(layout)
+        if task["layout"]:
+            apply_layout(
+                task["command"],
+                task["layout"]
+            )
         time.sleep(2) # biar sabar
 
     await update.message.reply_text("\n".join(results))

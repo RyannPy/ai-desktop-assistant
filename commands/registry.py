@@ -25,3 +25,17 @@ COMMANDS = {
         }
     ],
 }
+
+
+WINDOW_ALIASES = {
+    "youtube": "google chrome",
+    "chrome": "google chrome",
+    "vscode": "visual studio code"
+}
+
+VALID_COMMANDS = {
+    "youtube",
+    "chrome",
+    "vscode",
+    "nextjs"
+}
