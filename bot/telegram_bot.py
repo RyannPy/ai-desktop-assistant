@@ -4,6 +4,8 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
 from services.layout_service import apply_layout
+from services.desktop_service import switch_to_desktop
+
 from config.settings import TELEGRAM_TOKEN, ALLOWED_USER_ID
 from actions.executor import run_command
 
@@ -34,6 +36,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     results = []
     # run
     for task in tasks:
+
+        # atur desktop
+        switch_to_desktop(task["desktop"])
+
+        # run
         result = run_command(task["command"])
         time.sleep(2) # biar sabar
         results.append(result)

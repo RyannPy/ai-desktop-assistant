@@ -1,3 +1,3 @@
-from services.window_service import snap_left
+from services.desktop_service import switch_to_desktop
 
-snap_left("google chrome")
+switch_to_desktop(2)

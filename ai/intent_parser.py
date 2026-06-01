@@ -8,13 +8,14 @@ def parse_intent(text: str):
 
     current_command = None
 
-    for word in words:
+    for i, word in enumerate(words):
 
         if word in VALID_COMMANDS:
 
             current_command = {
                 "command": word,
-                "layout": None
+                "layout": None,
+                "desktop": 1
             }
 
             tasks.append(current_command)
@@ -28,5 +29,13 @@ def parse_intent(text: str):
 
             if current_command:
                 current_command["layout"] = "right"
+
+        elif word == "desktop":
+            
+            if i + 1 < len(words):
+                try:
+                    current_command["desktop"] = int(words[i + 1])
+                except:
+                    pass
 
     return tasks
