@@ -1,4 +1,4 @@
-from commands.registry import VALID_COMMANDS
+from ai.validator import VALID_COMMANDS
 
 def parse_intent(text: str):
 

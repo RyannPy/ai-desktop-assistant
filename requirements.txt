@@ -2,3 +2,4 @@ python-telegram-bot
 python-dotenv
 pyautogui
 pygetwindow
+google-genai

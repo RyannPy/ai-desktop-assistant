@@ -9,7 +9,7 @@ from services.desktop_service import switch_to_desktop
 from config.settings import TELEGRAM_TOKEN, ALLOWED_USER_ID
 from actions.executor import run_command
 
-from ai.intent_parser import parse_intent
+from ai.parser import parse_intent
 
 def is_allowed(user_id: int) -> bool:
     # cuma gua

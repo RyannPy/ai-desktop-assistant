@@ -1,3 +1,3 @@
-from services.desktop_service import switch_to_desktop
+from ai.planner import ai_plan
 
-switch_to_desktop(2)
+print(ai_plan("vscode desktop 3"))
