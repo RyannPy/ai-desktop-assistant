@@ -1,0 +1,156 @@
+{
+  "vscode": {
+    "action": {
+      "type": "open_app",
+      "app": "code"
+    },
+    "window_alias": "visual studio code"
+  },
+  "antigravity": {
+    "action": {
+      "type": "open_app",
+      "app": "C:\\Users\\Asus\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Antigravity IDE\\Antigravity IDE.exe"
+    },
+    "window_alias": "antigravity"
+  },
+  "nextjs": {
+    "action": {
+      "type": "open_folder",
+      "path": "D:\\StorageUtama\\Documents\\Coding\\Coding\\Framework\\NextJs"
+    },
+    "window_alias": "file explorer"
+  },
+  "datascience": {
+    "action": {
+      "type": "open_folder",
+      "path": "D:\\StorageUtama\\Documents\\Coding\\Coding\\Native\\Python\\DataScience"
+    },
+    "window_alias": "file explorer"
+  },
+  "chrome": {
+    "action": {
+      "type": "open_app",
+      "app": "chrome"
+    },
+    "window_alias": "google chrome"
+  },
+  "youtube": {
+    "action": {
+      "type": "open_url",
+      "url": "https://youtube.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "github": {
+    "action": {
+      "type": "open_url",
+      "url": "https://github.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "supabase": {
+    "action": {
+      "type": "open_url",
+      "url": "https://supabase.com/dashboard"
+    },
+    "window_alias": "google chrome"
+  },
+  "kaggle": {
+    "action": {
+      "type": "open_url",
+      "url": "https://kaggle.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "dicoding": {
+    "action": {
+      "type": "open_url",
+      "url": "https://dicoding.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "chatgpt": {
+    "action": {
+      "type": "open_url",
+      "url": "https://chatgpt.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "whatsapp": {
+    "action": {
+      "type": "open_url",
+      "url": "https://web.whatsapp.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "telegram_web": {
+    "action": {
+      "type": "open_url",
+      "url": "https://web.telegram.org"
+    },
+    "window_alias": "google chrome"
+  },
+  "telegram": {
+    "action": {
+      "type": "open_url",
+      "url": "https://web.telegram.org"
+    },
+    "window_alias": "google chrome"
+  },
+  "spotify": {
+    "action": {
+      "type": "open_url",
+      "url": "https://open.spotify.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "instagram": {
+    "action": {
+      "type": "open_url",
+      "url": "https://www.instagram.com"
+    },
+    "window_alias": "google chrome"
+  },
+  "localhost": {
+    "action": {
+      "type": "open_url",
+      "url": "http://localhost:3000"
+    },
+    "window_alias": "google chrome"
+  },
+  "explorer": {
+    "action": {
+      "type": "open_app",
+      "app": "explorer"
+    },
+    "window_alias": "file explorer"
+  },
+  "downloads": {
+    "action": {
+      "type": "open_folder",
+      "path": "D:\\StorageUtama\\Downloads"
+    },
+    "window_alias": "file explorer"
+  },
+  "gryphlink": {
+    "action": {
+      "type": "open_app",
+      "app": "D:\\StorageUtama\\Documents\\Other\\GRYPHLINK\\Launcher.exe"
+    },
+    "window_alias": "gryphlink"
+  },
+  "notepad": {
+    "action": {
+      "type": "open_app",
+      "app": "notepad"
+    },
+    "window_alias": "notepad"
+  },
+  "canva": {
+    "action": {
+      "type": "open_app",
+      "app": "C:\\Users\\Asus\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Canva.lnk"
+    },
+    "window_alias": "canva"
+  }
+}

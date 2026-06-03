@@ -1,3 +1,4 @@
+import sys
 import time
 
 from telegram import Update
@@ -12,6 +13,8 @@ from actions.executor import run_command
 
 from ai.planner import ai_plan
 from ai.responses import START_RESPONSES, UNKNOWN_RESPONSES, ACCESS_DENIED_RESPONSES, PLANNING_RESPONSES, SUCCESS_RESPONSES, pick
+
+from config.logger import logger
 
 from services.loading_service import (
     create_loading_message,
@@ -38,11 +41,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # ambil
     text = update.message.text
+    logger.info(f"User: {text}")
 
-    loading = await create_loading_message(
-        update,
-        "🧠 Memahami perintah..."
-    )
+
+    if text.lower() in ["exit", "keluar", "berhenti", "tutup"]:
+        await update.message.reply_text("Sampai jumpa!")
+        logger.info("Bot stopped.")
+        sys.exit(0)
 
     await context.bot.send_chat_action(
         chat_id=update.effective_chat.id,
@@ -52,14 +57,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # parsing & planning
     tasks = ai_plan(text)
 
+    logger.info(f"Tasks: {tasks}")
 
     # loading
-    await loading_step(
-        loading,
-        pick(PLANNING_RESPONSES),
+    loading = await create_loading_message(
+        update,
+        pick(PLANNING_RESPONSES)
     )
     
     if not tasks:
+        await delete_loading_message(loading)
+
         await update.message.reply_text(
             pick(UNKNOWN_RESPONSES)
         )
@@ -77,11 +85,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # atur desktop
         switch_to_desktop(task["desktop"])
 
-        # run
-        result = run_command(task["command"])
-        time.sleep(2) # biar sabar
-        results.append(result)
-
+        try:
+            # run
+            result = run_command(task["command"])
+            time.sleep(2) # biar sabar
+            results.append(result)
+        
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            results.append(f"Error: {e}")
 
         # abis run atur layout
         if task["layout"]:
@@ -96,6 +108,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     summary = "\n".join(results)
+
+    logger.info(f"Executed: {task['command']}")
+    logger.info(f"Result: {result}")
 
     await update.message.reply_text(
         f"{pick(SUCCESS_RESPONSES)}\n\n{summary}"
@@ -113,6 +128,7 @@ def start_bot():
         )
     )
     
-    print("Bot running..")
+    logger.info("Bot running.")
+    print("Bot is running.")
 
     app.run_polling()

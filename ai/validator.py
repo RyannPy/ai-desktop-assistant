@@ -1,38 +1,6 @@
-VALID_COMMANDS = {
-    # IDE / Coding
-    "vscode",
-    "antigravity",
+from commands.registry import COMMANDS
 
-    # Projects
-    "nextjs",
-    "datascience",
-
-    # Browser
-    "chrome",
-
-    # Websites
-    "youtube",
-    "github",
-    "supabase",
-    "kaggle",
-    "dicoding",
-    "chatgpt",
-    "whatsapp",
-    "telegram_web",
-    "spotify",
-    "instagram",
-    "localhost",
-
-    # File System
-    "explorer",
-    "downloads",
-
-    # Desktop Apps
-    "steam",
-    "gryphlink",
-    "notepad",
-    "canva"
-}
+VALID_COMMANDS = set(COMMANDS.keys())
 
 VALID_LAYOUTS = {
     None,
