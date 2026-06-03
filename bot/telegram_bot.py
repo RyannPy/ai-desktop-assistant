@@ -2,6 +2,7 @@ import time
 
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.constants import ChatAction
 
 from services.layout_service import apply_layout
 from services.desktop_service import switch_to_desktop
@@ -9,31 +10,67 @@ from services.desktop_service import switch_to_desktop
 from config.settings import TELEGRAM_TOKEN, ALLOWED_USER_ID
 from actions.executor import run_command
 
-from ai.parser import parse_intent
+from ai.planner import ai_plan
+from ai.responses import START_RESPONSES, UNKNOWN_RESPONSES, ACCESS_DENIED_RESPONSES, PLANNING_RESPONSES, SUCCESS_RESPONSES, pick
+
+from services.loading_service import (
+    create_loading_message,
+    loading_step,
+    delete_loading_message
+)
 
 def is_allowed(user_id: int) -> bool:
     # cuma gua
     return user_id == ALLOWED_USER_ID
+
+async def start(update, context):
+    await update.message.reply_text(
+        pick(START_RESPONSES)
+    )
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # cek id
     user_id = update.effective_user.id
     
     if not is_allowed(user_id):
-        await update.message.reply_text("Access denied.")
+        await update.message.reply_text(pick(ACCESS_DENIED_RESPONSES))
         return
     
-    # ambil dan parse
+    # ambil
     text = update.message.text
-    tasks = parse_intent(text)
 
+    loading = await create_loading_message(
+        update,
+        "🧠 Memahami perintah..."
+    )
+
+    await context.bot.send_chat_action(
+        chat_id=update.effective_chat.id,
+        action=ChatAction.TYPING
+    )
+    
+    # parsing & planning
+    tasks = ai_plan(text)
+
+
+    # loading
+    await loading_step(
+        loading,
+        pick(PLANNING_RESPONSES),
+    )
+    
     if not tasks:
         await update.message.reply_text(
-            "Gua gak ngerti 😭"
+            pick(UNKNOWN_RESPONSES)
         )
         return
     
     results = []
+
+    await loading_step(
+        loading,
+        "🖥️ Menjalankan task..."
+    )
     # run
     for task in tasks:
 
@@ -54,12 +91,20 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
         time.sleep(2) # biar sabar
 
-    await update.message.reply_text("\n".join(results))
+    await delete_loading_message(
+        loading
+    )
+
+    summary = "\n".join(results)
+
+    await update.message.reply_text(
+        f"{pick(SUCCESS_RESPONSES)}\n\n{summary}"
+    )
 
 
 def start_bot():
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
-    app.add_handler(CommandHandler("start", lambda update, context: update.message.reply_text("Halo! Mau dibukain apa hari ini?")))
+    app.add_handler(CommandHandler("start", start))
 
     app.add_handler(
         MessageHandler(
