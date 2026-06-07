@@ -1,4 +1,5 @@
 import sys
+import ctypes
 import time
 
 from telegram import Update
@@ -21,6 +22,15 @@ from services.loading_service import (
     loading_step,
     delete_loading_message
 )
+
+# Windows named mutex — atomic, no race condition, auto-release on crash
+_mutex = ctypes.windll.kernel32.CreateMutexW(None, True, "AiDesktopAssistantBot")
+_last_error = ctypes.windll.kernel32.GetLastError()
+
+if _last_error == 183:  # ERROR_ALREADY_EXISTS
+    logger.warning("Another bot instance is already running. Exiting.")
+    ctypes.windll.kernel32.CloseHandle(_mutex)
+    sys.exit(0)
 
 def is_allowed(user_id: int) -> bool:
     # cuma gua
@@ -47,7 +57,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if text.lower() in ["exit", "keluar", "berhenti", "tutup"]:
         await update.message.reply_text("Sampai jumpa!")
         logger.info("Bot stopped.")
-        sys.exit(0)
+
+        await context.application.stop()
+        return
 
     await context.bot.send_chat_action(
         chat_id=update.effective_chat.id,

@@ -3,3 +3,4 @@ python-dotenv
 pyautogui
 pygetwindow
 google-genai
+pyvda
